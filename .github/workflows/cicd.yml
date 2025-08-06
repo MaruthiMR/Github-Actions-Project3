@@ -19,6 +19,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: maven setup
+      run: sudo apt install maven -y
+
     - name: Maven compile
       run: mvn compile
 
