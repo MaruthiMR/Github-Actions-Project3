@@ -43,13 +43,8 @@ jobs:
       run: trivy fs --format json -o fs-report.json .
 
     - name: Install Gitleaks
-      run: |
-        GITLEAKS_VERSION="v8.18.0"  # or latest stable version
-        curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION#v}_linux_x64.tar.gz" -o gitleaks.tar.gz
-        tar -xzf gitleaks.tar.gz gitleaks
-        chmod +x gitleaks
-        sudo mv gitleaks /usr/local/bin/gitleaks
+      run: sudo apt install gitleaks -y 
 
 
     - name: Run Gitleaks scan for hardcoded secrets
-      run: gitleaks detect --source . --report-path=gitleaks-report.json --format=json
+      run: gitleaks detect source . -r gitleaks-report.json -f json
