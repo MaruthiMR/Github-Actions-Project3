@@ -52,6 +52,8 @@ jobs:
 
     - name: Run Gitleaks scan for hardcoded secrets
       run: gitleaks detect source . -r gitleaks-report.json -f json
+
+      
   test:
     needs: security-scan 
 
@@ -69,12 +71,21 @@ jobs:
 
     - name: Run unit-tests 
       run: mvn test 
+
+      
   build:
     needs: test 
 
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+        
     - name:  build project    
       run: mvn package
 
